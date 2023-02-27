@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include('../partials/head', {webtitle: "Usuario"}) %>
+    <body>
+        <%- include('../partials/header') %>
+
+        <div class="title">
+            <h2>¡Bienvenid@ <%= user.name %>!</h2>
+        </div>
+        <div class="user">
+          <div class="profile-image">
+            <img
+                src="/images/users/<%= user.image %>"
+                alt="imágen de perfil"
+                width="200px"
+            />
+          </div>
+          <div class="user-description">
+            <div class="description-dates">
+            <p><span>Nombre:</span> <%= user.name %></p>
+            <p><span>Usuario:</span> <%= user.user_name %></p>
+            <p><span>Identificación:</span> <%= user.identification_type %> <%= user.identification %></p>
+            <p><span>Email:</span> <%= user.email %></p>
+            <p><span>Dirección:</span> <%= user.address %></p>
+            <p><span>Celular:</span> <%= user.phone %></p>
+          </div>
+        </div>
+        </div>
+        <%- include('../partials/footer') %>
+    </body>
+</html>

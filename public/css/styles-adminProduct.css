@@ -1,0 +1,148 @@
+    .container-btn-new {
+        padding: 20px 0 10px 20px   ;
+    }
+
+    .buttons-container {
+        display: flex;
+        justify-content: center;
+        margin: 100px 0 0 0;
+        
+    }
+
+    .btnNew .admin-button {
+        background-image: linear-gradient(to right, #9D50BB 0%, #6E48AA 51%, #9D50BB 100%);
+        color: rgba(255, 255, 255, 0.788);
+        border-radius: 20px;
+        padding: 30px 40px;
+        border: none;
+        box-shadow: -2px -2px 1px 2px rgba(255, 255, 255, 0.5), 4px 4px 4px 2px rgba(0, 0, 0, 0.2);
+        cursor: pointer;
+        margin: 40px;
+        font-size: 30px;
+        text-align: center;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .btnNew .admin-button:hover {
+        box-shadow: -5px -5px 2px 3px rgba(255, 255, 255, 0.5), 5px 5px 5px 2px rgba(0, 0, 0, 0.2);
+        font-size: 35px;
+    }
+
+    .btnNew {
+        color: rgba(255, 255, 255, 0.788);
+        text-decoration: none;
+    }
+
+    .btnNew input{
+        background-image: linear-gradient(to right, #9D50BB 0%, #6E48AA 51%, #9D50BB 100%);
+        color: var(--white);
+        border-radius: 10px;
+        padding: 5px 10px;
+        border: none;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+        box-shadow: -2px -2px 1px 2px rgba(255, 255, 255, 0.5), 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+        cursor: pointer;
+       
+    }
+
+    
+    .container-edit-products{
+        margin: 10px;
+        box-shadow: -2px -2px 1px 2px rgba(255, 255, 255, 0.5), 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+        padding: 5px;
+    }
+    
+    .tableProducts {
+        width: 100%;
+        border-collapse: collapse;
+        
+    }
+
+    .head-editProduct th,td,tr {
+        border: 1px solid var(--dark-green);
+        text-align: center;
+        padding: 5px;
+    }
+
+    .btnEdit a {
+        text-decoration: none;
+    }
+
+    .btnEdit, .btnDelete {
+        display: inline;
+        text-align: center;
+    }
+    .btnEdit i{
+        background-image: linear-gradient(to right, #9D50BB 0%, #6E48AA 51%, #9D50BB 100%);
+        padding: 6px 8px;
+        color: var(--white);
+        border-radius: .5rem;
+        border: 1px solid var(--purple);
+        cursor: pointer;
+    }
+
+    .btnDelete{
+        background-color: var(--light-green);
+        font-size: 16px;
+        padding: 2px 8px;
+        border-radius: .5rem;
+        border: 1px solid var(--purple);
+        cursor: pointer;        
+    }
+
+    .btnDelete i{
+        color: var(--purple);
+    }
+
+    .edit-back-product{
+        font-size: 12px;
+        padding: 5px;
+        text-align: center;
+    }
+
+    @media (max-width: 769px){
+    
+        .container-edit-products{
+            padding-top: 20px;
+        }
+        
+        .tableProducts {
+            border: none;
+            margin: auto;
+            width: 90%;
+        }
+
+        .head-editProduct {
+            display: none;
+        }
+    
+        .tableProducts tr {
+            margin-bottom: 10px;
+            padding: 10px;
+            display: block;
+            border: none;
+            box-shadow: inset -10px -10px 10px 3px rgba(255, 255, 255, 0.5), inset 3px 3px 10px 3px rgba(0, 0, 0, 0.2);
+
+            }
+
+        .tableProducts td {
+            display: block;
+            border: none;
+            border-bottom: 1px solid var(--white);
+            text-align: right;
+        }
+
+        .tableProducts td::before {
+            content: attr(data-label);
+            float: left;
+        }
+
+        .buttons-container {
+            display: block;
+            width: 100%;
+            margin: auto;
+
+            
+        }
+    
+    }

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../partials/head', {webtitle: "Productos" }) %>
+  <body>
+    <div class="container">
+      <%- include('../partials/header') %>
+        <%- include('../partials/product-menu', {category}) %>
+        <section class="products">
+          <div class="products-list">   
+            <% for(let i=0; i < products.length; i++) { %>
+              <div class="card">
+                <a href="/products/detail/<%= products[i].product_id %>">
+                  <img src="/images/products/<%= products[i].image %>" alt="<%= products[i].category_id %>"></a> 
+                <div class="description-legend">
+                  <p><%= products[i].name %></p>
+                  <p>$<%= products[i].price %></p>
+                  <button class="button-add" data-id = "<%= products[i].product_id %>" data-name="<%= products[i].name %>" data-price="<%= products[i].price %>">Agregar al carrito</button>
+                </div>
+              </div>   
+            <% } %>
+          </div>
+        </section>
+      <%- include('../partials/footer') %>
+    </div>
+    <div id="modal-menu" class="modal">
+      <a class="close" href="#">X</a>
+      <li><a href="/">Inicio</a></li>
+      <li><a href="/">Tienda</a></li>
+      <li><a class="red" href="/users/login">Iniciar sesión</a></li>
+      <li><a href="/users/register">Registrate</a></li>
+      <a class="cart" href="/products/cart"><i class="fas fa-solid fa-cart-shopping"></i></a>
+    </div>
+
+    <script>
+      
+      const addToCartButtons = document.querySelectorAll('.button-add');
+
+      addToCartButtons.forEach(button => {
+        button.addEventListener('click', (event) => {
+          event.preventDefault();
+          
+          // Obtener la información del producto del botón que se presionó
+          const product = {
+            id: parseInt(event.target.getAttribute('data-id')),
+            name: event.target.getAttribute('data-name'),
+            price: parseFloat(event.target.getAttribute('data-price')),
+            quantity: 1
+          };
+          
+          // Agregar el producto al carrito
+          addToCart(product);
+        });
+      });
+
+      let cart = [];
+
+      function addToCart(product) {
+        // Verificar si el producto ya está en el carrito
+        const existingProductIndex = cart.findIndex(p => p.id === product.id);
+        if (existingProductIndex !== -1) {
+          // Si el producto ya está en el carrito, aumentar la cantidad
+          cart[existingProductIndex].quantity++;
+        } else {
+          // Si el producto no está en el carrito, agregarlo
+          cart.push(product);
+        }
+        
+        // Guardar el carrito en LocalStorage
+        localStorage.setItem('cart', JSON.stringify(cart));
+      }
+    </script>
+  </body>
+
+</html>

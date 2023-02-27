@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../partials/head', {webtitle: "Editar / Crear producto" }) %>
+  <%- include('../partials/header') %>
+    <body>
+      <div class="container-btn-new">
+        <a class="btnNew" href="/products/addProduct">
+          <input type="button" value="Agregar producto">
+        </a>
+      </div>
+      <div class="container-edit-products">
+        <table class="tableProducts">
+          <thead class="head-editProduct">
+            <tr>
+              <th>ID</th>
+              <th>NOMBRE DEL PRODUCTO</th>
+              <th>DESCRIPCIÓN</th>
+              <th>REFERENCIA</th>
+              <th>CATEGORIA</th>
+              <th>STOCK</th>
+              <th>PRECIO</th>
+             <!--<th>IMAGEN</th> -->
+              <th>ACCIONES</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% for(let i=0; i < Products.length; i++){ %>
+            <form method="POST" action="/products/delete/<%= Products[i].product_id %>?_method=DELETE">
+              <tr>
+                <td data-label="ID">
+                  <%= Products[i].product_id %>
+                </td>
+                <td data-label="NOMBRE DEL PRODUCTO">
+                  <%= Products[i].name %>
+                </td>
+                <td data-label="DESCRIPCIÓN">
+                  <%= Products[i].description %>
+                </td>
+                <td data-label="REFERENCIA">
+                  <%= Products[i].reference %>
+                </td>
+                <td data-label="CATEGORIA">
+                  <!-- <%= Products[i].category_id %> -->
+                  <% Categories.forEach(category => { %>
+                    <% if (Products[i].category_id == category.category_id) { %><%= category.name %><% };%>
+                  <% }); %>
+                </td>
+                <td data-label="STOCK">
+                  <%= Products[i].stock %>
+                </td>
+                <td data-label="PRECIO">
+                  <%= Products[i].price %>
+                </td>
+                <td data-label="ACCIONES">
+                  <div class="btnEdit">
+                    <a href="/products/editProduct/<%= Products[i].product_id %>">
+                      <i class="fa-solid fa-pencil"></i>
+                    </a>
+                  </div>
+                  <button type="submit" class="btnDelete" onclick="confirm('¿Está seguro que desea eliminar el registro?')">
+                    <i class="fa-solid fa-trash-can"></i>
+                  </button>
+                </td>
+              </tr>
+            </form>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
+      <%- include('../partials/footer') %>
+      
+    </body>
+
+</html>

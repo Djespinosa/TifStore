@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../partials/head', {webtitle: "Editar / Crear producto" }) %>
+  </head>
+  <%- include('../partials/header') %>
+
+    <body>
+      <div class="buttons-container">
+        <div class="container-btn-new">
+          <a class="btnNew" href="/products/addeditProduct">
+            <!-- <input type="button" value="Productos">  -->
+            <div class="admin-button">
+              <i class="fa-solid fa-dolly"></i>
+              Productos
+            </div>
+          </a>
+        </div>
+        <div class="container-btn-new">
+          <a class="btnNew" href="/users/addEditUser"> 
+            <!-- <input type="button" value="Usuarios"> -->
+            <div class="admin-button">
+              <i class="fa-solid fa-user"></i>  
+              Usuarios
+          </div>
+          </a>
+        </div>
+        <div class="container-btn-new">
+          <a class="btnNew" href="/stocks/adminStock"> 
+            <!-- <input type="button" value="Usuarios"> -->
+            <div class="admin-button">
+              <i class="fa-solid fa-screwdriver-wrench"></i> 
+              Inventario
+          </div>
+          </a>
+        </div>
+      </div>
+
+      <%- include('../partials/footer') %>
+    </body>
+
+</html>
+

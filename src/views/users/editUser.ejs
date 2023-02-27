@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../partials/head', {webtitle: "Registrarse"}) %>
+<body>
+  <%- include('../partials/header') %>
+    <main>
+        <div class="register">
+            <div class="container-login-register">
+                <div class="tab-login">
+                    <a href="/users/login"><button type="button">Iniciar sesión</button></a>
+                </div>
+                <div class="tab-register">
+                    <a href="/users/register"><button type="button">Registro</button></a>
+                </div>
+            </div>
+            <div class="card-register">
+                <section>
+                    
+                    <div class="logo-login">
+                        <i class="fa-solid fa-user"></i>
+                    </div>
+                    
+                    <div class="log-text">
+                        <p>EDICIÓN DE USUARIO</p>
+                        </div>
+                        
+                    <% if (users) { %>
+                    <form action="/users/editUser/<%= users.user_id %>?_method=PUT" method="POST" class="form-register" enctype="multipart/form-data"> 
+                        
+                        <div class="register-log-name">
+                            <i class="fa-solid fa-pencil"></i>
+                            <input type="text" name="name" id="name" placeholder="Nombre y apellido" value="<%= users.name %>">
+                        </div>
+                        <% if (locals.errors && errors.name) { %>
+                            <div class="text-danger">
+                                <%= errors.name.msg %>
+                            </div>
+                            <% } %>
+        
+                        <div class="register-log-name">
+                            <i class="fa-solid fa-pencil"></i>
+                            <input type="text" name="user_name" id="user_name" placeholder="Usuario" value="<%= users.user_name %>">
+                        </div>
+                        <% if (locals.errors && errors.user_name) { %>
+                            <div class="text-danger">
+                                <%= errors.user_name.msg %>
+                            </div>
+                            <% } %>
+        
+                        <div class="register-log-name">
+                            <i class="fa-solid fa-pencil"></i>
+                            <select name="identification_type" id="identification_type" class="form-input">                                                                         
+                                <option value="CC" <% if (users.identification_type == "CC") { %> <%= 'selected' %> <% }; %> >Cédula de ciudadanía</option>
+                                <option value="PP" <% if (users.identification_type == "PP") { %> <%= 'selected' %> <% }; %> >Pasaporte</option>
+                                <option value="CE" <% if (users.identification_type == "CE") { %> <%= 'selected' %> <% }; %> >Cedula Extrajeria</option>
+                            </select>
+                        </div>
+                        <% if (locals.errors && errors.identification_type) { %>
+                            <div class="text-danger">
+                                <%= errors.identification_type.msg %>
+                            </div>
+                            <% } %>
+        
+                        <div class="register-log-name">
+                            <i class="fa-solid fa-pencil"></i>
+                            <input type="text" name="identification" id="identification" placeholder="Número de identificación" value="<%= users.identification %>">
+                        </div>
+                        <% if (locals.errors && errors.identification) { %>
+                            <div class="text-danger">
+                                <%= errors.identification.msg %>
+                            </div>
+                            <% } %>
+
+                        <div class="register-log-user">
+                            <i class="fa-solid fa-user"></i>
+                            <input type="text" name="address" id="address" placeholder="Dirección" value="<%= users.address %>">
+                        </div>
+                        <% if (locals.errors && errors.address) { %>
+                            <div class="text-danger">
+                                <%= errors.address.msg %>
+                            </div>
+                            <% } %>
+                        
+                        <div class="register-log-user">
+                            <i class="fa-solid fa-user"></i>
+                            <input type="text" name="phone" id="phone" placeholder="Celular" value="<%= users.phone %>">
+                        </div>
+                            <% if (locals.errors && errors.phone) { %>
+                            <div class="text-danger">
+                                <%= errors.phone.msg %>
+                            </div>
+                            <% } %>
+        
+                        <div class="register-log-email">
+                            <i class="fa-solid fa-envelope"></i>
+                            <input type="text" name="email" id="email" placeholder="Correo Electrónico" value="<%= users.email %>">
+                        </div>
+                            <% if (locals.errors && errors.email) { %>
+                            <div class="text-danger">
+                                <%= errors.email.msg %>
+                            </div>
+                            <% } %>
+                        
+                            <div class="register-log-password">
+                                <i class="fa-solid fa-key"></i>
+                            <input type="password" name="password" id="password" placeholder="Contraseña">
+                        </div>
+                        <% if (locals.errors && errors.password) { %>
+                            <div class="text-danger">
+                                <%= errors.password.msg %>
+                            </div>
+                            <% } %>      
+                            
+                        <div class="register-log-password">
+                            <i class="fa-solid fa-key"></i>
+                            <select name="rol_id" id="rol_id" class="form-input">
+                            <option value="" selected>- Seleccione el rol -</option>
+                                <% roles.forEach(rol=> { %>
+                                    <option value="<%= rol.rol_id %>"<% if (users.rol_id == rol.rol_id) { %><%= 'selected' %><% }; %>><%= rol.name %></option>
+                                <% }); %>
+                            </select>
+                        </div>
+                            <% if (locals.errors && errors.rol_id) { %>
+                            <div class="text-danger">
+                                <%= errors.rol_id.msg %>
+                            </div>
+                            <% } %>
+    
+                            <div class="register-log-image">
+                                <label for="image" class="form-label"></label>
+                                <input type="file" name="image" id="image" class="form-input">
+                            </div>
+                            <% if (locals.errors && errors.image) { %>
+                            <div class="text-danger">
+                                <%= errors.image.msg %>
+                            </div>
+                            <% } %>
+
+                            <div class="register-button">
+                                <button type="submit">Guardar</button>
+                            </div>
+                    </form>
+                    <% } %>
+
+                    <div class="Privacy-Policy">
+                        <p>Sus datos personales se utilizarán para respaldar su experiencia en este sitio web, para
+                            administrar el acceso a su cuenta y para otros fines descritos en nuestra <u>política de
+                                privacidad</u></p>
+                    </div>
+
+                    <a href="/users/login"><p class="back-login"><u>Volver a inicio de sesión</u></p></a> 
+
+                </section>
+            </div>
+        </div>
+    </main>
+    <div id="modal-menu" class="modal">
+        <a class="close" href="#">X</a>
+        <li><a href="/">Inicio</a></li>
+        <li><a href="/tshirts">Tienda</a></li>
+        <li><a class="red" href="/users/login">Iniciar sesión</a></li>
+        <li><a href="/users/register">Registrate</a></li>
+        <a class="cart" href="/products/cart"><i class="fas fa-solid fa-cart-shopping"></i></a>
+    </div>
+    <%- include('../partials/footer') %>
+</body>
+ 
+</html>

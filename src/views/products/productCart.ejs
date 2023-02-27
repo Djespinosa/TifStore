@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../partials/head', {webtitle: "Carrito"}) %>
+  <body>
+    <%- include('../partials/header') %>
+      <main>
+        <section class="cart">
+          <form action="/cart" method="POST" enctype="application/x-www-form-urlencoded" class="form-editProduct" id="form1">
+          <table>
+            <thead>
+              <tr>
+                <th>Producto</th>
+                <th>Cantidad</th>
+                <th>Precio unitario</th>
+                <th>Precio total</th>
+              </tr>
+            </thead>
+            <tbody id="cart-table-body">
+              <!-- Aquí se agregarán las filas de la tabla -->
+            </tbody>
+          </table>
+          <button type="submit" id="btn-pay" onclick="createSale()" class="btn btn-primary">Pagar</button>
+        </form>
+        </section>
+      </main>
+      <%- include('../partials/footer') %>
+        <div id="modal-menu" class="modal">
+          <a class="close" href="#">X</a>
+          <li><a href="/">Inicio</a></li>
+          <li><a href="/">Tienda</a></li>
+          <li><a class="red" href="/users/login">Iniciar sesión</a></li>
+          <li><a href="/users/register">Registrate</a></li>
+          <a class="cart" href="/products/cart"><i class="fas fa-solid fa-cart-shopping"></i></a>
+        </div>
+        
+        <script>
+          const cartTableBody = document.getElementById('cart-table-body');
+
+          // Recuperar el carrito guardado en LocalStorage
+          const cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+          let total = 0;
+
+          // Agregar una fila para cada producto en el carrito
+          cart.forEach(product => {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td style="visibility:collapse; display:none;"><input type="hidden" name="product_id" value = "${product.id}" class="form-control" /></td> 
+            <td><input type="text" name="name" value = "${product.name}" class="form-control" /></td>
+            <td><input type="number" name="quantity" value = ${product.quantity} class="form-control" /></td>
+            <td><input type="number" name="price" value = ${product.price.toFixed(2)} class="form-control" /></td>
+            <td><input type="number" name="total" value = ${(product.price * product.quantity).toFixed(2)} class="form-control" /></td>
+            <td><a class="btn-delete" data-name="${product.name}"><i class="fa-solid fa-trash-can"></i></a></td>
+          `;
+          cartTableBody.appendChild(row);
+
+          total += product.price * product.quantity;
+        });
+
+        // Agregar una fila al final de la tabla con el total general
+        const totalRow = document.createElement('tr');
+        totalRow.innerHTML = `
+          <td colspan="3" class="text-end"><strong>Total</strong></td>
+          <td><strong>$${total.toFixed(2)}</strong></td>
+          <td></td>
+        `;
+        cartTableBody.appendChild(totalRow);
+
+        // Agregar evento para botones de eliminar
+        const deleteButtons = document.querySelectorAll('.btn-delete');
+        deleteButtons.forEach(button => {
+          button.addEventListener('click', event => {
+            const productName = event.target.dataset.name;
+            const productIndex = cart.findIndex(product => product.name === productName);
+            cart.splice(productIndex, 1);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            location.reload();
+          });
+        });
+
+        // Agregar evento para botón de pagar
+        const btnPay = document.getElementById('btn-pay');
+        btnPay.addEventListener('click', event => {
+          alert('Gracias por tu compra!');
+          localStorage.removeItem('cart');
+          location.reload();
+        });
+        </script>
+  </body>
+</html>

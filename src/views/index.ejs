@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('./partials/head', {webtitle: "Home"}) %>
+<body>
+  <div class="container">
+    <%- include('./partials/header') %>
+    <section class="slider">
+      <img src="images/Banner1.png" alt="">
+    </section>
+    <section class="intermediate">
+      
+      <h1>TENEMOS PLANES QUE SE ACOMODAN A TU NECESIDAD</h1>
+      
+      <a href="/products/products-list/Hogar">
+        <input type="button" value="¡Ir a la tienda!">
+      </a>
+  
+    </section>
+    <section class="products">
+      <div class="products-list">
+        <% for(let i=0; i < categories.length; i++) { %>
+          <div class="card">
+            <div class="description">
+              <p><%= categories[i].name %></p>
+            </div>
+            <a href="/products/products-list/<%= categories[i].name %>"><img src="/images/products/<%= categories[i].image %>"  alt="<%= categories[i].name %>"></a> 
+          </div>       
+        <% } %>
+    </section>
+    <%- include('./partials/footer') %>
+    <section class="intermediate">
+      
+      <h1>SOPORTE DEDICADO</h1>
+
+      <div class="support">
+        <div>
+          <h1>7</h1>
+          <p>Días de la semana</p>
+        </div>
+        <div>
+          <h1>24</h1>
+          <p>Horas del día</p>
+        </div>
+        <div>
+          <h1>365</h1>
+          <p>Días del año</p>
+        </div>
+      </div>
+    </section>
+
+  </div>
+  <div id="modal-menu" class="modal">
+    <a class="close" href="#">X</a>
+    <li><a href="/">Inicio</a></li>
+    <li><a href="/">Tienda</a></li>
+    <li><a class="red" href="/users/login">Iniciar sesión</a></li>
+    <li><a href="/users/register">Registrate</a></li>
+    <a class="cart" href="/products/cart"><i class="fas fa-solid fa-cart-shopping"></i></a>
+  </div>
+</body>
+
+</html>

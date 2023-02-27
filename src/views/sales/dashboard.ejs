@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.2/css/dataTables.bootstrap5.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.11.4/b-2.0.1/b-html5-2.0.1/r-2.2.9/datatables.min.js"></script>
+</head>
+    <%- include('../partials/header') %>
+        <body>
+            <table id="sales" class="table table-striped" style="width:100%">
+                <thead class="head-editProduct">
+                  <tr>
+                    <th>ID VENTA</th>
+                    <th>REFERENCIA DE LA VENTA</th>
+                    <th>USUARIO</th>
+                    <th>FECHA</th>
+                    <th>TOTAL</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% for(let i=0; i < totalSales.length; i++){ %>
+                    <tr>
+                      <td data-label="ID VENTA">
+                        <%= totalSales[i].fk_saledetail_sale.dataValues.sale_id %>
+                      </td>
+                      <td data-label="REFERENCIA DE LA VENTA">
+                        <%= totalSales[i].dataValues.sale_reference %>
+                      </td>
+                      <td data-label="USUARIO">
+                        <% users.forEach(user => { %>
+                            <% if (totalSales[i].fk_saledetail_sale.dataValues.user_id == user.user_id) { %><%= user.name %><% };%>
+                          <% }); %>
+                      </td>
+                      <td data-label="FECHA">
+                        <%= totalSales[i].fk_saledetail_sale.dataValues.sale_date %>
+                      </td>                  
+                      <td data-label="TOTAL">
+                        <%= totalSales[i].dataValues.Total %>
+                      </td>
+                    </tr>
+                  <% } %>
+                </tbody>
+              </table>
+            <%- include('../partials/footer') %>
+            <script>
+                $(document).ready(function() {
+                $('#sales').DataTable({
+                    paging: true, // Habilitar la paginación
+                    pageLength: 10 // Especificar el número de filas por página
+                });
+                });
+            </script>
+        </body>
+</html>

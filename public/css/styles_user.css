@@ -1,0 +1,70 @@
+:root {
+  --purple: #301E67;
+  --white: #FFFFFF;
+  --black: #000000;
+  --light-green: #B6EADA;
+  --dark-grenn: #5B8FB9;
+    /*Fonts*/
+    --big: 2rem;
+    --small: 0.5rem;
+}
+
+.title {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+/* centrar tarjeta */
+
+.user {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 8rem;
+    
+}
+
+.user-description {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    background-color: var(--white);
+    border-radius: 0.8rem;
+    box-shadow: 0 0 1rem var(--dark-green);
+    text-align: right;
+    z-index: -1;
+}
+
+.description-dates {
+  margin-top: 6rem;
+  text-align: left;
+  border-top: solid 3px var(--light-green); 
+}
+
+.description-dates p {
+  font-size: 20px;
+  color: var(--dark-green);
+}
+
+.description-dates p span {
+  font-size: 20px;
+  color: var(--purple)
+}
+
+.profile-image img{
+  background-color: var(--light-green);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 12rem;
+    height: 12rem;
+    border: 5px solid var(--light-green);
+    border-radius: 50%;
+    margin-bottom: -6rem;
+    z-index: 1;
+}

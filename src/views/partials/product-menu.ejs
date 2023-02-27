@@ -1,0 +1,23 @@
+<section class="intermediate-menu">
+  <ul>
+    <li><a href="/products/products-list/Hogar" id="a1">Plan Hogar</a></li>
+    <li><a href="/products/products-list/Empresas" id="a2">Plan Empresas</a></li>
+    <li><a href="/products/products-list/Equipos" id="a3">Equipos</a></li>
+
+  </ul>
+</section>
+<% if (category == 'Hogar') { %>
+  <script>
+    document.getElementById('a1').className = 'underlined'
+  </script>
+<% } %>
+<% if (category == 'Empresas') { %>
+  <script>
+    document.getElementById('a2').className = 'underlined'
+  </script>
+<% } %>
+<% if (category == 'Equipos') { %>
+  <script>
+    document.getElementById('a3').className = 'underlined'
+  </script>
+<% } %>

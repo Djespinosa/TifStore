@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../partials/head', {webtitle: "Editar / Crear producto" }) %>
+  </head>
+  <%- include('../partials/header') %>
+    <body>
+      <div class="container-btn-new">
+        <a class="btnNew" href="/products/addProduct">
+          <input type="button" value="Agregar producto">
+        </a>
+      </div>
+      <div class="container-btn-new">
+        <a class="btnNew" href="/stocks/income">
+          <input type="button" value="Ingreso de factura">
+        </a>
+      </div>
+      <div class="container-edit-products">
+        <table class="tableProducts">
+          <thead class="head-editProduct">
+            <tr>
+              <th>ID</th>
+              <th>USUARIO</th>
+              <th>REFERENCIA</th>
+              <th>FECHA</th>
+              <th>PRODUCTO</th>
+              <th>ID INGRESO</th>
+              <th>PRECIO DE COMPRA</th>
+              <th>CANTIDAD</th>
+             <!--<th>IMAGEN</th> -->
+              <th>ACCIONES</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% for(let i=0; i < incomeDetail.length; i++){ %>
+            <form method="POST" action="/products/delete/<%= incomeDetail[i].income_detail_id %>?_method=DELETE">
+              <tr>
+                <td data-label="ID">
+                  <%= incomeDetail[i].income_detail_id %>
+                </td>
+                <td data-label="USUARIO">
+                  <% users.forEach(user => { %>
+                    <% if (income[i].user_id == user.user_id) { %><%= user.name %><% };%>
+                  <% }); %>
+                </td>
+                <td data-label="REFERENCIA">
+                  <% income.forEach(inc => { %>
+                    <% if (incomeDetail[i].income_id == inc.income_id) { %><%= inc.income_reference %><% };%>
+                  <% }); %>
+                </td>
+                <td data-label="FECHA">
+                  <% income.forEach(inc => { %>
+                    <% if (incomeDetail[i].income_id == inc.income_id) { %><%= inc.income_date %><% };%>
+                  <% }); %>
+                </td>
+                <td data-label="PRODUCTO">
+                  <% products.forEach(product => { %>
+                    <% if (incomeDetail[i].product_id == product.product_id) { %><%= product.name %><% };%>
+                  <% }); %>
+                </td>
+                <td data-label="ID INGRESO">
+                  <% income.forEach(inc => { %>
+                    <% if (incomeDetail[i].income_id == inc.income_id) { %><%= inc.income_id %><% };%>
+                  <% }); %>
+                </td>
+                <td data-label="PRECIO DE COMPRA">
+                  <%= incomeDetail[i].price %>
+                </td>
+                <td data-label="CANTIDAD">
+                  <%= incomeDetail[i].quantity %>
+                </td>
+                <td data-label="ACCIONES">
+                  <div class="btnEdit">
+                    <a href="/products/editProduct/<%= incomeDetail[i].product_id %>">
+                      <i class="fa-solid fa-pencil"></i>
+                    </a>
+                  </div>
+                  <button type="submit" class="btnDelete" onclick="confirm('¿Está seguro que desea eliminar el registro?')">
+                    <i class="fa-solid fa-trash-can"></i>
+                  </button>
+                </td>
+              </tr>
+            </form>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
+      <%- include('../partials/footer') %>    
+</body>
+</html>
+

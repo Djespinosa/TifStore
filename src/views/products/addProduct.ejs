@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../partials/head', {webtitle: "Agregar productos" }) %>
+
+  <body>
+    <%- include('../partials/header') %>
+    <main>
+      <div class="editProduct">
+          <section class="product-form">
+            <div class="logo-editProduct">
+              <i class="fa-solid fa-file-circle-plus"></i>
+            </div>
+            <div class="edit-product-text">
+              <p>NUEVO PRODUCTO.</p>
+            </div>
+            <form action="/products/createProduct" method="POST" enctype="multipart/form-data" class="form-editProduct">
+              
+              <div class="edit-log-category">
+                <select name="category_id" id="category_id" class="form-input">
+                  <option value="" disabled selected>- Select Category -</option>
+                  <% categories.forEach(category=> { %>
+                    <option value="<%= category.category_id %>">
+                      <%= category.name %>
+                    </option>
+                    <% }); %>
+                </select>
+              </div>
+              <% if (locals.errors && errors.category_id) { %>
+                <div class="text-danger">
+                  <div>
+                    <%= errors.category_id.msg %>
+                  </div>
+                </div>
+                <% } %>
+              
+              <div class="edit-log-nameProduct">
+                <input type="text" name="reference" id="reference" placeholder="Referencia del producto"
+                  value="<%= locals.oldData ? oldData.reference: null%>">
+              </div>
+              <% if (locals.errors && errors.reference) { %>
+                <div class="text-danger">
+                  <div>
+                    <%= errors.reference.msg %>
+                  </div>
+                </div>
+                <% } %>
+
+              <div class="edit-log-nameProduct">
+                <input type="text" name="name" id="name" placeholder="Nombre del producto"
+                  value="<%= locals.oldData ? oldData.name: null%>">
+              </div>
+              <% if (locals.errors && errors.name) { %>
+                <div class="text-danger">
+                  <div>
+                    <%= errors.name.msg %>
+                  </div>
+                </div>
+                <% } %>
+
+              <div class="edit-log-description">
+                <input type="text" name="description" id="description" placeholder="Descripción"
+                  value="<%= locals.oldData ? oldData.description: null%>">
+              </div>
+              <% if (locals.errors && errors.description) { %>
+                <div class="text-danger">
+                  <div>
+                    <%= errors.description.msg %>
+                  </div>
+                </div>
+                <% } %>
+
+                <div class="edit-log-price">
+                  <input type="number" step="0.00" name="price" id="price" placeholder="Precio"
+                    value="<%= locals.oldData ? oldData.price: null%>">
+                </div>
+                <% if (locals.errors && errors.price) { %>
+                  <div class="text-danger">
+                    <div>
+                      <%= errors.price.msg %>
+                    </div>
+                  </div>
+                  <% } %>
+                
+                <div class="edit-log-price">
+                  <input type="number" step="0.00" name="stock" id="stock" placeholder="stock"
+                    value="<%= locals.oldData ? oldData.stock: null%>">
+                </div>
+                <% if (locals.errors && errors.stock) { %>
+                  <div class="text-danger">
+                    <div>
+                      <%= errors.stock.msg %>
+                    </div>
+                  </div>
+                  <% } %>
+                            
+                <div class="edit-log-image">
+                  <label for="productImage" class="form-label"></label>
+                  <input type="file" name="image" id="productImage" class="form-input">
+                </div>
+                <% if (locals.errors && errors.image) { %>
+                  <div class="text-danger">
+                    <div>
+                      <%= errors.image.msg %>
+                    </div>
+                  </div>
+                  <% } %>
+
+                <div class="edit-buttonSave">
+                  <button type="submit" onclick="createProduct()">Guardar</button>
+                </div>
+
+            </form>
+            <div class="edit-back-product">
+              <a href="/products/addEditProduct">Volver a productos</a>
+            </div>
+          </section>
+        </div>
+        </div>
+      </main>
+      <div id="modal-menu" class="modal">
+        <a class="close" href="#">X</a>
+        <li><a href="/">Inicio</a></li>
+        <li><a href="/tshirts">Tienda</a></li>
+        <li><a class="red" href="/users/login">Iniciar sesión</a></li>
+        <li><a href="/users/register">Registrate</a></li>
+        <a class="cart" href="/products/cart"><i class="fas fa-solid fa-cart-shopping"></i></a>
+      </div>
+      <%- include('../partials/footer') %>        
+  </body>
+
+</html>
