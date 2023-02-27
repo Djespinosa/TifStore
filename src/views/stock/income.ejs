@@ -6,7 +6,7 @@
     <%- include('../partials/header') %>
     <main>
       <div class="editProduct">
-          <section class="product-form">
+          <section class="income-form">
             <div class="logo-editProduct">
               <i class="fa-solid fa-file-circle-plus"></i>
             </div>
@@ -16,7 +16,7 @@
 
             <form action="/stocks/createIncome" method="POST" enctype="application/x-www-form-urlencoded" class="form-editProduct" id="form1">
 
-              <table class="table table-bordered table-hover" id="tab_logic_income">
+              <table class= "tableProducts" id="tab_logic_income">
                 <thead>
                   <tr>                    
                     <th class="text-center">
@@ -44,7 +44,7 @@
 
             <!-- <form action="/stocks/createIncome/createIncomeDetail" method="POST" enctype="application/x-www-form-urlencoded" class="form-editProduct" id="form2"> -->
 
-              <table class="table table-bordered table-hover" id="tab_logic">
+              <table class="tableProducts" id="tab_logic">
                 <thead>
                   <tr>
                     <th class="text-center">
@@ -79,8 +79,8 @@
 
                 </tbody>
               </table>
-              <a id="add_row" class="btn btn-default pull-left">Agregar fila</a><a id="delete_row" class="pull-right btn btn-default">Eliminar fila</a>
-              <button type="submit" id="submit" onclick="incomeForm1()" class="btn btn-primary">Enviar datos</button>
+              <a id="add_row" class="btn-default">Agregar fila</a><a id="delete_row" class="btn-default">Eliminar fila</a>
+              <button type="submit" id="submit" onclick="incomeForm1()" class="btn-primary">Enviar datos</button>
             </form>
             
             

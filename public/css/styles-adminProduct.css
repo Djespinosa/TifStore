@@ -55,7 +55,7 @@
     .tableProducts {
         width: 100%;
         border-collapse: collapse;
-        
+        margin-bottom: 20px;        
     }
 
     .head-editProduct th,td,tr {

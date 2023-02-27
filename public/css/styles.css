@@ -109,7 +109,7 @@ nav .left-section {
   align-items: center;
   flex-wrap: wrap;
   gap: 1rem;
-  width: 50%;
+  width: 20%;
 }
 
 nav form.search {
@@ -122,6 +122,11 @@ nav form.search input[type=search] {
   padding: .6rem;
   border: 1px solid var(--dark-green);
   width: 100%;
+}
+
+.form-control{
+  border: none;
+  background-color: var(--light-green);
 }
 
 
