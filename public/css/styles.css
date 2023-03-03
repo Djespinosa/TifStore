@@ -129,6 +129,9 @@ nav form.search input[type=search] {
   background-color: var(--light-green);
 }
 
+.swal-modal {
+  z-index: 99999;
+}
 
 /*Footer*/
 

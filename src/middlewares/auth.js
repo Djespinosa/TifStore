@@ -1,8 +1,9 @@
 function authMiddleware(req, res, next) {
-  if (!req.session.userLogged) {
-    return res.redirect("/users/login");
+  if (req.session.userLogged && req.session.userLogged.rol_id == 1) {
+    next();
+  } else {
+        res.redirect('/unauthorized');
   }
-  next();
 }
 
 module.exports = authMiddleware;
