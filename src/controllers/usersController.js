@@ -143,7 +143,19 @@ const controller = {
   errorInstance.save();
   }
   },
-  
+  clientRegister: async (req, res) => {
+    try{
+      res.render("users/clientRegister");
+    } catch (err){
+    console.error(err);
+    const errorInstance = Status.build({
+      date: new Date(),
+      url: `${req.protocol}://localhost:${port}${req.originalUrl}`,
+      message: err.message
+  });
+  errorInstance.save();
+  }
+  },
   registerProcess: async function(req, res){
     try {
       const roles = await Rol.findAll();  

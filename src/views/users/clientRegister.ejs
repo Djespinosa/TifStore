@@ -11,7 +11,7 @@
               <a href="/users/login"><button type="button">Iniciar sesión</button></a>
             </div>
             <div class="tab-register">
-              <a href="/users/register"><button type="button">Registro</button></a>
+              <a <% if (locals.isLogged && locals.isLogged.rol_id == 1) { %> <%=href="/users/register" %><% } else {%> <%= 'href=/users/clientRegister' %> <% }; %> ><button type="button">Registro</button></a>
             </div>
           </div>
 

@@ -6,7 +6,8 @@ const usersController = require("../controllers/usersController");
 const uploadFile = require("../middlewares/userMulter");
 const validations = require("../middlewares/validateRegister");
 const guestMiddleware = require("../middlewares/guest"); 
-const authMiddleware = require("../middlewares/auth"); 
+const authMiddleware = require("../middlewares/auth");
+const clientAuthMiddleware = require("../middlewares/clientAuth"); 
 
 //******Routes******
 //addEditUser
@@ -28,13 +29,15 @@ router.delete("/delete/:id", authMiddleware, usersController.delete);
 router.post("/login", usersController.loginProcess);
 
 //register form
-router.get("/register", usersController.register);
+router.get("/register", authMiddleware, usersController.register);
+router.get("/clientRegister", usersController.clientRegister);
 
 //register process
-router.post("/register", uploadFile.single("image"), validations, usersController.registerProcess); 
+router.post("/register", authMiddleware, uploadFile.single("image"), validations, usersController.registerProcess);
+router.post("/clientRegister", uploadFile.single("image"), validations, usersController.clientRegisterProcess); 
 
 //profile page
-router.get("/profile", authMiddleware, usersController.profile); 
+router.get("/profile", clientAuthMiddleware, usersController.profile); 
 
 //logout
 router.get("/logout", usersController.logout); 

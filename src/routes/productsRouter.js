@@ -5,7 +5,8 @@ const productsController = require("../controllers/productsController");
 //******Middlewares******
 const uploadFile= require("../middlewares/productMulter");
 const validations = require("../middlewares/validateProducts");
-const authMiddleware = require("../middlewares/auth"); 
+const authMiddleware = require("../middlewares/auth");
+
 
 //******Rutas******
 
@@ -18,7 +19,7 @@ router.post("/createProduct", authMiddleware, uploadFile.single("image"), valida
 
 // rutas de edición de productos
 router.get("/editProduct/:id", authMiddleware, productsController.editProduct);
-router.put("/editProduct/:id", uploadFile.single("image"), validations, productsController.update);
+router.put("/editProduct/:id", authMiddleware, uploadFile.single("image"), validations, productsController.update);
 
 //ruta para eliminar producto
 router.delete("/delete/:id", authMiddleware, productsController.delete);
