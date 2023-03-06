@@ -12,7 +12,6 @@ const port = 3001;
 const controller = {    
     cart: async function (req, res) {
         const products = await Product.findAll();
-        console.log(req.url)
         res.render('products/productCart', { products});
 
     },

@@ -52,7 +52,7 @@
         });
       });
 
-      let cart = [];
+      let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
       function addToCart(product) {
         // Verificar si el producto ya está en el carrito

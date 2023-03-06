@@ -106,6 +106,9 @@ const controller = {
               message: 'Login con exito'
             });
             errorInstance.save();
+            req.session.nowInMinutes = Math.floor(Date.now() / 60e3);
+            req.session.logoutTimer = { timeout: null };
+            console.log(req.session.nowInMinutes)
         return res.redirect("/");
       } else {
         return res.render("users/login", {

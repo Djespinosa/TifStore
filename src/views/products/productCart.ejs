@@ -45,11 +45,11 @@
           cart.forEach(product => {
           const row = document.createElement('tr');
           row.innerHTML = `
-            <td style="visibility:collapse; display:none;"><input type="hidden" name="product_id" value = "${product.id}" class="form-control" /></td> 
-            <td><input type="text" name="name" value = "${product.name}" class="form-control" /></td>
+            <td style="visibility:collapse; display:none;"><input type="hidden" name="product_id" value = "${product.id}" class="form-control" readonly /></td> 
+            <td><input type="text" name="name" value = "${product.name}" class="form-control" readonly /></td>
             <td><input type="number" name="quantity" value = ${product.quantity} class="form-control" /></td>
-            <td><input type="number" name="price" value = ${product.price.toFixed(2)} class="form-control" /></td>
-            <td><input type="number" name="total" value = ${(product.price * product.quantity).toFixed(2)} class="form-control" /></td>
+            <td><input type="number" name="price" value = ${product.price.toFixed(2)} class="form-control" readonly /></td>
+            <td><input type="number" name="total" value = ${(product.price * product.quantity).toFixed(2)} class="form-control" readonly /></td>
             <td><a class="btn-delete" data-name="${product.name}"><i class="fa-solid fa-trash-can"></i></a></td>
           `;
           cartTableBody.appendChild(row);

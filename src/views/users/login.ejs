@@ -10,7 +10,7 @@
                 <a href="/users/login"><button type="button">Iniciar sesión</button></a>
                 </div>
                 <div class="tab-register">
-                   <a <% if (locals.isLogged && locals.isLogged.rol_id == 1) { %> <%=href="/users/register" %><% } else {%> <%= 'href=/users/clientRegister' %> <% }; %> ><button type="button">Registro</button></a> 
+                  <a <% if (locals.isLogged && locals.isLogged.rol_id == 1) { %> <%=href="/users/register" %><% } else {%> <%= 'href=/users/clientRegister' %> <% }; %> ><button type="button">Registro</button></a> 
             </div>
         </div>
         <div class="card-register">
@@ -58,63 +58,5 @@
                 </div>
     </main>
   <%- include('../partials/footer') %>
-  <script>
-
-    const removeChild = (div, id) => {
-      for (var i = 0; i < div.children.length; i++) {
-        if (div.children[i].id == id) {
-          div.removeChild(div.lastChild)
-        }
-      }
-    }
-
-    const removeError = (errors, deleteItem) => {
-      for (var i = 0; i < errors.length; i++) {
-        if (errors[i] == deleteItem) {
-          errors.splice(i, 1);
-        }
-      }
-    }
-
-    const createErrorMessage = (text, div, id) => {
-      let span = document.createElement("span");
-      span.setAttribute('id', id);
-      span.innerText = '';
-      span.innerText = text;
-      span.className = 'text-danger';
-      span.style = 'width:20%';
-      div.appendChild(span);
-    }
-
-    const login = () => {
-      let form = document.querySelector('form.login-form');
-      let emailDiv = document.querySelector('div.log-user');
-      let passwordDiv = document.querySelector('div.log-password');
-      let email = document.getElementById('log-user');
-      let password = document.getElementById('password');
-      let errors = [];
-      form.addEventListener('submit', (event) => {
-        if (email.value == '') {
-          errors.push('emailRequired');
-          removeChild(emailDiv, 'emailRequired');
-          createErrorMessage('Campo requerido', emailDiv, 'emailRequired');
-        } else {
-          removeError(errors, 'emailRequired');
-          removeChild(emailDiv, 'emailRequired');
-        }
-        if (password.value == '') {
-          errors.push('passwordRequired');
-          removeChild(passwordDiv, 'passwordRequired');
-          createErrorMessage('Campo requerido', passwordDiv, 'passwordRequired');
-        } else {
-          removeError(errors, 'passwordRequired');
-          removeChild(passwordDiv, 'passwordRequired');
-        }
-        if (errors.length > 0) {
-          event.preventDefault();
-        }
-      })
-    }
-  </script>
 </body>
 </html>

@@ -11,7 +11,6 @@ const controller = {
         const product = req.params.product;
         let products;
         let category;
-        console.log(products)
         const productsDB = await Product.findAll();
         switch (product) {
             case 'Hogar':
@@ -56,12 +55,12 @@ const controller = {
         }
     },
     adminProductUser: (req, res) => {
-        const errorInstance = Status.build({
-            date: new Date(),
-            url: `${req.protocol}://localhost:${port}${req.originalUrl}`,
-            message: 'Ingreso al panel de administración'
-        });
-        errorInstance.save();
+        // const errorInstance = Status.build({
+        //     date: new Date(),
+        //     url: `${req.protocol}://localhost:${port}${req.originalUrl}`,
+        //     message: 'Ingreso al panel de administración'
+        // });
+        // errorInstance.save();
         res.render('products/adminProductUser');
     },
     addEditProduct: async function (req, res) {

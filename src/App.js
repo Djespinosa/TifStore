@@ -15,8 +15,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(methodOverride('_method'));
 app.use (session({secret: "This is a secret", 
-resave: false,
-saveUninitialized: false }));
+resave: true,
+saveUninitialized: true,
+cookie: { maxAge: 60 * 1000 },
+rolling: true }));
 
 // ******App middlewares******
 const userLogged = require("./middlewares/userLogged"); 
