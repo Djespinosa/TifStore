@@ -38,8 +38,8 @@
                   <%= incomeDetail[i].income_detail_id %>
                 </td>
                 <td data-label="USUARIO">
-                  <% users.forEach(user => { %>
-                    <% if (income[i].user_id == user.user_id) { %><%= user.name %><% };%>
+                  <% income.forEach(inc => { %>
+                    <% if (incomeDetail[i].income_id == inc.income_id) { %><%= inc.user_id %><% };%>
                   <% }); %>
                 </td>
                 <td data-label="REFERENCIA">

@@ -41,9 +41,13 @@ const controller = {
     }, 
     incomeForm1: async function(req, res){
         const objeto = req.body;
-        try {            
+        try {     
             const resultado = [];
-            
+
+            const productIds = Array.isArray(objeto.product_id) ? objeto.product_id : [objeto.product_id];
+            const prices = Array.isArray(objeto.price) ? objeto.price : [objeto.price];
+            const quantities = Array.isArray(objeto.quantity) ? objeto.quantity : [objeto.quantity]; 
+
             const income = await Income.create({
                     user_id: req.session.userLogged.user_id,
                     income_reference: req.body.income_reference,
@@ -53,16 +57,25 @@ const controller = {
                             
             for (let i = 0; i < objeto.product_id.length; i++) {
                 const item = {
-                    product_id: parseInt(objeto.product_id[i]),
-                    income_id: income.income_id,
-                    price: parseInt(objeto.price[i]),
-                    quantity: parseInt(objeto.quantity[i])
+                    product_id: parseInt(productIds[i]),
+                    income_id: income.income_id,                    
+                    price: parseFloat(prices[i]),
+                    quantity: parseInt(quantities[i])
                 };          
             resultado.push(item);
             }
 
             await IncomeDetail.bulkCreate(resultado);
             
+            for (let i = 0; i < resultado.length; i++) {
+                const item = resultado[i];
+                const product = await Product.findByPk(item.product_id);
+                if (product) {
+                  // Sumar la cantidad ingresada a la cantidad actual del producto
+                const newQuantity = product.stock + item.quantity;
+                await product.update({ stock: newQuantity });
+                }
+            }
             const errorInstance = await Status.build({
                 date: new Date(),
                 url: `${req.protocol}://localhost:${port}${req.originalUrl}`,

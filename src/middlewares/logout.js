@@ -1,17 +1,18 @@
 const timeout = require('connect-timeout');
 
 function logoutMiddleware(req, res, next) {
-  // Si ya existe un temporizador activo, no hacer nada
-  if (req.session.logoutTimer) {
-    return next();
-  }
-
   // Reiniciar el temporizador
   req.session.nowInMinutes = Math.floor(Date.now() / 60e3);
 
-  // Middleware para cerrar la sesión por inactividad
-  req.session.logoutTimer = timeout('2m')(req, res, function() {
-    req.session.destroy(function(err) {
+  // Cancelar el temporizador anterior, si lo hay
+  if (req.session.logoutTimer) {
+    clearTimeout(req.session.logoutTimer);
+  }
+
+  // Crear un nuevo temporizador
+  const timeoutLength = 5 * 60 * 1000; // 5 minutos en milisegundos
+  req.session.logoutTimer = setTimeout(() => {
+    req.session.destroy((err) => {
       if (err) {
         console.error(err);
       } else {
@@ -19,10 +20,10 @@ function logoutMiddleware(req, res, next) {
       }
       res.redirect('/');
     });
-  });
+  }, timeoutLength);
 
   // Pasar al siguiente middleware
   next();
 }
 
-module.exports = logoutMiddleware;
+module.exports = timeout('5m'), logoutMiddleware;
