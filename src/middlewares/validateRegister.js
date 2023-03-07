@@ -11,7 +11,6 @@ const validations = [
     body("email").notEmpty().withMessage("El email es obligatorio").bail().isEmail().withMessage("Debes escribir el email en un formato válido"),
     //incluir mayusculas, minusculas, numeros y caracteres especiales
     body("password").notEmpty().withMessage("La contraseña es obligatoria").bail().isLength({ min: 8 }).withMessage("La contraseña debe tener al menos 8 caracteres").matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$@$!%*?&])[A-Za-z\d#$@$!%*?&]{8,}/).withMessage("La contraseña debe tener al menos una mayúscula, una minúscula, un número y un caracter especial"),
-    body("rol_id").notEmpty().withMessage("El rol es obligatorio"),
     body("image").custom((value, { req }) => {
         let file = req.file;
         let acceptedExtensions = [".jpg", ".jpeg", ".gif", ".png", ".JPG", ".JPEG", ".PNG", ".GIF"];

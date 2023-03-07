@@ -230,11 +230,10 @@ const controller = {
     },
     clientRegisterProcess: async function(req, res){
       try {
-        const roles = await Rol.findAll();  
+        console.log(req.body);
         const validation = validationResult(req);
               if (validation.errors.length > 0) {
-              return res.render("users/register", {
-                roles: roles,
+              return res.render("users/clientRegister", {
                 errors: validation.mapped(),
                 oldData: req.body,
               });
@@ -243,7 +242,7 @@ const controller = {
           const emailinDB = await User.findOne({
                 where :{email: checkEmail}  });
             if (emailinDB) {
-              return res.render("users/register", {
+              return res.render("users/clientRegister", {
                 errors: {
                   email: {
                     msg: "El email ya esta registrado",
@@ -257,7 +256,7 @@ const controller = {
             const userDB = await User.findOne({
                   where :{user_name: checkLogUser}});
               if (userDB) {
-                return res.render("users/register", {
+                return res.render("users/clientRegister", {
                   errors: {
                     logUser: {
                       msg: "El usuario ya esta registrado",

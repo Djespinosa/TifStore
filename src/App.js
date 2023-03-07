@@ -15,9 +15,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(methodOverride('_method'));
 app.use (session({secret: "This is a secret", 
-resave: true,
+resave: false,
 saveUninitialized: true,
-cookie: { maxAge: 60 * 1000 },
+cookie: { maxAge: 60 * 1000 * 10 },
 rolling: true }));
 
 // ******App middlewares******
