@@ -3,6 +3,7 @@ const router = express.Router();
 const cartController = require("../controllers/cartController");
 const logoutMiddleware = require('../middlewares/logout');
 
+
 //******Middlewares******
 const uploadFile= require("../middlewares/productMulter");
 const validations = require("../middlewares/validateProducts");
