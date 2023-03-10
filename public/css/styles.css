@@ -7,11 +7,10 @@
 }
 
 :root {
-  --purple: #6930C3;
+  --purple: #6E48AA;
   --white: #FFFFFF;
-  --black: #2A2F35;
-  --light-green: #E7FFFF;
-  --dark-green: #33CCFF;
+  --black: #1a2227;
+  --gold: #b28405;
   /*Fonts*/
   --big: 2rem;
   --small: .5rem;
@@ -19,7 +18,7 @@
 
 body {
   font-family: 'Poppins', sans-serif;
-  background-color: var(--light-green);
+  background-color: var(--white);
   position: relative;
   padding-bottom: 5rem;
   min-height: 100vh;
@@ -36,13 +35,12 @@ body {
 }
 
 nav {
-  background: linear-gradient(to top, var(--light-green), var(--dark-green));
+  background: linear-gradient(to right, #02111a 35%, #1a2227 51%, #6E48AA 99%);
   justify-content: space-between;
-  padding: 2rem;
-  
+  padding: 2rem;  
   border-bottom: none;
-  -webkit-box-shadow: 0px 7px 16px -8px var(--light-green);
-  box-shadow: 0px 7px 16px -8px var(--light-green);
+  -webkit-box-shadow: 0px 7px 16px -8px var(--white);
+  box-shadow: 0px 7px 16px -8px var(--white);
 }
 
 nav,
@@ -68,13 +66,13 @@ nav img {
 
 nav .nav-items ul li a {
   text-decoration: none;
-  color: var(--black);
+  color: var(--white);
   font-size: 1.2rem
 }
 
 nav .nav-items ul li .image-locals {
-  width: 1.8rem;
-  height: 1.8rem;
+  width: 2.5rem;
+  height: 2.5rem;
   border-radius: 50%;
 }
 
@@ -100,7 +98,7 @@ nav .responsive-menu a.cart {
   display: none;
 }
 
-nav .hamburguer-menu .fa-solid {
+nav .hamburguer-menu .fa-solid, .locals a{
   color: var(--white);
 }
 
@@ -120,13 +118,13 @@ nav form.search input[type=search] {
   border-radius: .5rem;
   height: 2rem;
   padding: .6rem;
-  border: 1px solid var(--dark-green);
+  border: 1px solid var(--gold);
   width: 100%;
 }
 
 .form-control{
   border: none;
-  background-color: var(--light-green);
+  background-color: var(--white);
 }
 
 .swal-modal {
@@ -144,7 +142,7 @@ footer {
 }
 
 .footer-container {
-  background-image: linear-gradient(to right, #9D50BB 0%, #6E48AA 51%, #9D50BB 100%);
+  background: linear-gradient(to right, #02111a 35%, #1a2227 51%, #6E48AA 99%);
   color: var(--white);
   padding: 1rem;
   display: flex;

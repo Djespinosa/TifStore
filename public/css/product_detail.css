@@ -1,10 +1,4 @@
-:root {
-  --purple: #301E67;
-  --white: #FFFFFF;
-  --black: #000000;
-  --light-green: #B6EADA;
-  --dark-grenn: #5B8FB9;
-  /*Fonts*/
+:root {  /*Fonts*/
   --big: 2rem;
   --small: .5rem;
 }
@@ -24,7 +18,7 @@
 
   body {
     font-family: 'Poppins', sans-serif;
-    background-color: var(--light-green);
+    background-color: var(--white);
     font-weight: bold;
   }
   
@@ -75,18 +69,12 @@ nav .nav-items ul li {
     list-style: none;
 }
 
-nav .nav-items ul li a {
-    text-decoration: none;
-    color: var(--black);
-}
-
 .nav-items a.cart,
 .responsive-menu a.cart,
 .nav-items ul li a.purple,
 .hamburguer-menu {
-    background-image: linear-gradient(to right, #9D50BB 0%, #6E48AA 51%, #9D50BB 100%);
+    background-image: linear-gradient( 174.2deg,  rgba(255,244,228,1) 7.1%, rgba(240,246,238,1) 67.4% );
     padding: .2rem .4rem;
-    color: var(--white);
     border-radius: .5rem;
 }
 
@@ -122,7 +110,7 @@ nav form.search input[type=search] {
     border-radius: .5rem;
     height: 2rem;
     padding: .6rem;
-    border: 1px solid var(--dark-green);
+    border: 1px solid var(--gold);
     width: 100%;
 }
   
@@ -140,7 +128,7 @@ nav form.search input[type=search] {
     align-self: center;
     display: flex;
     flex-direction: column;
-    background-color: var(--light-green);
+    background-color: var(--white);
     border-radius: 15px;
     text-align: center;
     box-shadow: 0px 0 20px rgb(124, 124, 124);
@@ -150,7 +138,7 @@ nav form.search input[type=search] {
   
   .prod-nav img {
     border-radius: 15px;
-    border: solid 1px var(--dark-green);
+    border: solid 1px var(--gold);
     width: 150px;
     margin: 3px;
   }
@@ -182,7 +170,7 @@ nav form.search input[type=search] {
     max-width: 100vh;
     display: flex;
     flex-direction: column;
-    background-color: var(--light-green);
+    background-color: var(--white);
     border-radius: 20px;
     padding: 20px;
     align-items: flex-start;
@@ -205,7 +193,7 @@ nav form.search input[type=search] {
   #quantity {
     padding: 10px 20px;
     margin-left: 15px;
-    background-color: var(--light-green);
+    background-color: var(--white);
     color: var(--purple);
     border: none;
     border-radius: 50px;

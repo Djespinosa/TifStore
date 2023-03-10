@@ -2,7 +2,7 @@
   --purple: #301E67;
   --white: #FFFFFF;
   --black: #000000;
-  --light-green: #B6EADA;
+  --white: #B6EADA;
   --dark-grenn: #5B8FB9;
     /*Fonts*/
     --big: 2rem;
@@ -34,7 +34,7 @@
     padding: 2rem;
     background-color: var(--white);
     border-radius: 0.8rem;
-    box-shadow: 0 0 1rem var(--dark-green);
+    box-shadow: 0 0 1rem var(--gold);
     text-align: right;
     z-index: -1;
 }
@@ -42,12 +42,12 @@
 .description-dates {
   margin-top: 6rem;
   text-align: left;
-  border-top: solid 3px var(--light-green); 
+  border-top: solid 3px var(--white); 
 }
 
 .description-dates p {
   font-size: 20px;
-  color: var(--dark-green);
+  color: var(--gold);
 }
 
 .description-dates p span {
@@ -56,14 +56,14 @@
 }
 
 .profile-image img{
-  background-color: var(--light-green);
+  background-color: var(--white);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     width: 12rem;
     height: 12rem;
-    border: 5px solid var(--light-green);
+    border: 5px solid var(--white);
     border-radius: 50%;
     margin-bottom: -6rem;
     z-index: 1;
