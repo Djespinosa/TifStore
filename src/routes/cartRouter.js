@@ -17,5 +17,6 @@ router.post("/", clientAuthMiddleware, cartController.createSale);
 //******Rutas dashboard******
 
 router.get("/dashboard", authMiddleware, cartController.dashboard);
+router.get("/totalSales", cartController.totalSales);
 
 module.exports = router;

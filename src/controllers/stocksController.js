@@ -44,7 +44,7 @@ const controller = {
         try {     
             const resultado = [];
 
-            const productIds = Array.isArray(objeto.product_id) ? objeto.product_id : [objeto.product_id];
+            const productIds = Array.isArray(objeto.product_id) ? objeto.product_id : [parseInt(objeto.product_id)];
             const prices = Array.isArray(objeto.price) ? objeto.price : [objeto.price];
             const quantities = Array.isArray(objeto.quantity) ? objeto.quantity : [objeto.quantity]; 
 
@@ -55,7 +55,7 @@ const controller = {
                     status: true
                 });
                             
-            for (let i = 0; i < objeto.product_id.length; i++) {
+            for (let i = 0; i < productIds.length; i++) {
                 const item = {
                     product_id: parseInt(productIds[i]),
                     income_id: income.income_id,                    

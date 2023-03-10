@@ -19,9 +19,10 @@ const controller = {
     createSale: async function (req, res) {
         try {            
             const objeto = req.body;
+            console.log(objeto);
             const resultado = [];
             
-            const productIds = Array.isArray(objeto.product_id) ? objeto.product_id : [objeto.product_id];
+            const productIds = Array.isArray(objeto.product_id) ? objeto.product_id : [parseInt(objeto.product_id)];
             const prices = Array.isArray(objeto.price) ? objeto.price : [objeto.price];
             const quantities = Array.isArray(objeto.quantity) ? objeto.quantity : [objeto.quantity]; 
 
@@ -31,8 +32,8 @@ const controller = {
                     sale_date: new Date(),
                     status: true
                 });
-                            
-            for (let i = 0; i < objeto.product_id.length; i++) {
+            
+            for (let i = 0; i < productIds.length; i++) {
                 const item = {
                     product_id: parseInt(productIds[i]),
                     sale_id: sale.sale_id,
@@ -41,7 +42,8 @@ const controller = {
                 };          
             resultado.push(item);
             }
-
+            console.log(resultado);
+            
             await saleDetail.bulkCreate(resultado);
 
             for (let i = 0; i < resultado.length; i++) {
@@ -72,8 +74,8 @@ const controller = {
             });
             errorInstance.save();
         }
-        // console.log(req.body);
-        // res.redirect('/products/products-list/Hogar');
+        
+        res.redirect('/products/products-list/Hogar');
     },
 
     dashboard: async function (req, res) {
@@ -85,39 +87,157 @@ const controller = {
         const totalSales = await saleDetail.findAll({
             include: ['fk_saledetail_sale'],
             attributes: [
-              [sequelize.col('sale_reference'), 'sale_reference'],
-              [sequelize.literal('SUM(price * quantity)'), 'Total']
+                [sequelize.col('sale_reference'), 'sale_reference'],
+                [sequelize.literal('SUM(price * quantity)'), 'Total']
             ],
             group: ['fk_saledetail_sale.sale_id']
         });
-        return res.render('sales/dashboard',{totalSales, users});
+        const countSales = await Sale.findAll({
+            attributes: [[sequelize.fn("COUNT", sequelize.col("sale_id")), "Cantidad"]]
+        });
+        const totalSalesMonth = await Sale.findAll({
+            attributes: [
+                [sequelize.fn("MONTH", sequelize.col("sale_date")), "month"],
+                [sequelize.fn("COUNT", sequelize.col("sale_id")), "Cantidad"]
+            ],
+            group: [sequelize.fn("MONTH", sequelize.col("sale_date"))]
+        });
+        const totalSalesPerson = await Sale.findAll({
+            include: [
+                {
+                    model: saleDetail,
+                    as: 'fk_saledetail_sale'
+                },
+                {
+                    model: User,
+                    as: 'fk_sale_user',
+                    attributes: ['name', 'rol_id'],
+                    where: {
+                        rol_id: 2
+                    }
+                }
+            ],
+            attributes: [
+                [sequelize.fn('MONTH', sequelize.col('sale_date')), 'month'],
+                [sequelize.literal('(COUNT(fk_saledetail_sale.sale_id))'), 'total_sales'],
+                [sequelize.literal('name'), 'seller_name']
+            ],
+            group: ['name','month'],
+        });
+        const totalMonth = await Sale.findAll({
+            include: ['fk_saledetail_sale'],
+            attributes: [
+                [sequelize.fn('MONTH', sequelize.col('sale_date')), 'month'],
+                [sequelize.literal('(SUM(price * quantity))'), 'total_sales']
+            ],
+            group: ['month'],
+        });
+        const total = await saleDetail.findAll({
+            attributes: [
+                [sequelize.literal('(SUM(price * quantity))'), 'total_sales']
+            ]
+        });
+        const totalPersonMonth = await Sale.findAll({
+            include: [
+                {
+                    model: saleDetail,
+                    as: 'fk_saledetail_sale'
+                },
+                {
+                    model: User,
+                    as: 'fk_sale_user',
+                    attributes: ['name', 'rol_id'],
+                    where: {
+                        rol_id: 2
+                    }
+                }
+            ],
+            attributes: [
+                [sequelize.fn('MONTH', sequelize.col('sale_date')), 'month'],
+                [sequelize.literal('(SUM(price * quantity))'), 'total_sales'],
+                [sequelize.literal('name'), 'seller_name']
+            ],
+            group: ['name','month'],
+        });
+
+        return res.render('sales/dashboard',{total,totalPersonMonth, totalMonth, totalSalesPerson, totalSalesMonth, countSales,totalSales, users});
     },
 
-    productList: async function (req, res) {
+    totalSales: async function (req, res) {
         try {
-            const productsList = await Product.findAll({
-                include: {all: true},
-                attributes: ['id','name','description',
-                        [sequelize.col('name_product_category'),'name_product_category'],
-                        [sequelize.col('name_color'),'name_color'],
-                        [sequelize.col('name_size'),'name_size'],'price', 'url'
-                ]
-            })
-           
-            const countByCategory = await Product.findAll({
-                include: ['fkproduct_category'],
-                attributes: [[sequelize.col('name_product_category'),'name_product_category'],[sequelize.fn("COUNT", sequelize.col("category_id")), "Cantidad"]],
-                group: ["name_product_category"]
-                
-            })
-            const countCategory = await ProductCategory.findAll({                               
-            })         
+            const totalSales = await Sale.findAll({
+                attributes: [[sequelize.fn("COUNT", sequelize.col("sale_id")), "Cantidad"]]
+            });
+
+            const totalSalesMonth = await Sale.findAll({
+                attributes: [
+                    [sequelize.fn("MONTH", sequelize.col("sale_date")), "month"],
+                    [sequelize.fn("COUNT", sequelize.col("sale_id")), "Cantidad"]
+                ],
+                group: [sequelize.fn("MONTH", sequelize.col("sale_date"))]
+            });
+
+            const totalSalesPerson = await Sale.findAll({
+                include: [
+                    {
+                        model: saleDetail,
+                        as: 'fk_saledetail_sale'
+                    },
+                    {
+                        model: User,
+                        as: 'fk_sale_user',
+                        attributes: ['name', 'rol_id'],
+                        where: {
+                            rol_id: 2
+                        }
+                    }
+                ],
+                attributes: [
+                    [sequelize.fn('MONTH', sequelize.col('sale_date')), 'month'],
+                    [sequelize.literal('(COUNT(fk_saledetail_sale.sale_id))'), 'total_sales'],
+                    [sequelize.literal('name'), 'seller_name']
+                ],
+                group: ['name','month'],
+            });
             
+            const totalMonth = await Sale.findAll({
+                include: ['fk_saledetail_sale'],
+                attributes: [
+                    [sequelize.fn('MONTH', sequelize.col('sale_date')), 'month'],
+                    [sequelize.literal('(SUM(price * quantity))'), 'total_sales']
+                ],
+                group: ['month'],
+            });
+
+            const totalPersonMonth = await Sale.findAll({
+                include: [
+                    {
+                        model: saleDetail,
+                        as: 'fk_saledetail_sale'
+                    },
+                    {
+                        model: User,
+                        as: 'fk_sale_user',
+                        attributes: ['name', 'rol_id'],
+                        where: {
+                            rol_id: 2
+                        }
+                    }
+                ],
+                attributes: [
+                    [sequelize.fn('MONTH', sequelize.col('sale_date')), 'month'],
+                    [sequelize.literal('(SUM(price * quantity))'), 'total_sales'],
+                    [sequelize.literal('name'), 'seller_name']
+                ],
+                group: ['name','month'],
+            });
+                        
             return res.json({
-                count: productsList.length,
-                countByCategory: countByCategory,
-                products: productsList,
-                countCategory: countCategory.length,                
+                totalSales: totalSales,
+                totalSalesMonth: totalSalesMonth,
+                totalSalesPerson: totalSalesPerson,
+                totalMonth: totalMonth,
+                totalPersonMonth: totalPersonMonth, 
                 status: 200
             });
 

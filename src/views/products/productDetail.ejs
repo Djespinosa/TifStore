@@ -61,13 +61,14 @@
           addToCartButtons.forEach(button => {
             button.addEventListener('click', (event) => {
               event.preventDefault();
-              
+            
+              const quantity = parseInt(document.querySelector('#quantity').value);  
               // Obtener la información del producto del botón que se presionó
               const product = {
                 id: parseInt(event.target.getAttribute('data-id')),
                 name: event.target.getAttribute('data-name'),
                 price: parseFloat(event.target.getAttribute('data-price')),
-                quantity: 1
+                quantity: quantity
               };
               
               // Agregar el producto al carrito
@@ -90,6 +91,8 @@
             
             // Guardar el carrito en LocalStorage
             localStorage.setItem('cart', JSON.stringify(cart));
+
+            updateCartCount();
           }
         </script>
   </body>

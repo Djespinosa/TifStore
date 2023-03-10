@@ -13,6 +13,124 @@
 </head>
     <%- include('../partials/header') %>
         <body>
+          
+            <div class="card" style= "display: grid; grid-template-columns: 20% 40% 40%;">
+              <div class="card-header">
+                <h5 class="card-title" style="font-weight: unset;">CANTIDAD DE VENTAS</h5>
+                <span style="font-size: 2rem;"><%= countSales[0].dataValues.Cantidad %></span>
+              </div>
+
+              <div class="card-header">
+                <h5 class="card-title" style="font-weight: unset;">CANTIDAD DE VENTAS POR MES</h5>
+                <table class="table table-striped" style="width:100%">
+                  <thead class="head-editProduct">
+                    <tr>
+                      <th>Mes</th>
+                      <th>Cantidad de ventas</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% for(let i=0; i < totalSalesMonth.length; i++){ %>
+                    <tr>
+                        <td data-label="Mes">
+                            <%= totalSalesMonth[i].dataValues.month %>
+                        </td>
+                        <td data-label="Cantidad de ventas">
+                          <%= totalSalesMonth[i].dataValues.Cantidad %>
+                      </td>
+                    </tr>
+                      <% } %>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="card-header">
+                <h5 class="card-title" style="font-weight: unset;">CANTIDAD DE VENTAS POR VENDEDOR</h5>
+                <table class="table table-striped" style="width:100%">
+                  <thead class="head-editProduct">
+                    <tr>
+                      <th>Mes</th>
+                      <th>Vendedor</th>
+                      <th>Cantidad de ventas</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% for(let i=0; i < totalSalesPerson.length; i++){ %>
+                    <tr>
+                      <td data-label="Mes">
+                        <%= totalSalesPerson[i].dataValues.month %>
+                      </td>
+                      <td data-label="Vendedor">
+                        <%= totalSalesPerson[i].dataValues.fk_sale_user.name %>
+                      </td>
+                      <td data-label="Cantidad de ventas">
+                        <%= totalSalesPerson[i].dataValues.total_sales %>
+                      </td>
+                    </tr>
+                      <% } %>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="card-header">
+                <h5 class="card-title" style="font-weight: unset;">VENTA TOTAL</h5>
+                <span style="font-size: 2rem;"><%= total[0].dataValues.total_sales %></span>
+              </div>
+
+              <div class="card-header">
+                <h5 class="card-title" style="font-weight: unset;">VENTAS EN PESOS POR MES</h5>
+                <table class="table table-striped" style="width:100%">
+                  <thead class="head-editProduct">
+                    <tr>
+                      <th>Mes</th>
+                      <th>Cantidad de ventas</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% for(let i=0; i < totalMonth.length; i++){ %>
+                    <tr>
+                        <td data-label="Mes">
+                            <%= totalMonth[i].dataValues.month %>
+                        </td>
+                        <td data-label="Cantidad de ventas">
+                          <%= totalMonth[i].dataValues.total_sales %>
+                      </td>
+                    </tr>
+                      <% } %>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="card-header">
+                <h5 class="card-title" style="font-weight: unset;">VENTAS EN PESOS POR VENDEDOR</h5>
+                <table class="table table-striped" style="width:100%">
+                  <thead class="head-editProduct">
+                    <tr>
+                      <th>Mes</th>
+                      <th>Vendedor</th>
+                      <th>ventas en pesos</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% for(let i=0; i < totalPersonMonth.length; i++){ %>
+                    <tr>
+                      <td data-label="Mes">
+                        <%= totalPersonMonth[i].dataValues.month %>
+                      </td>
+                      <td data-label="Vendedor">
+                        <%= totalPersonMonth[i].dataValues.seller_name %>
+                      </td>
+                      <td data-label="Cantidad de ventas">
+                        <%= totalPersonMonth[i].dataValues.total_sales %>
+                      </td>
+                    </tr>
+                      <% } %>
+                  </tbody>
+                </table>
+              </div>
+
+            </div>
+
             <table id="sales" class="table table-striped" style="width:100%">
                 <thead class="head-editProduct">
                   <tr>
