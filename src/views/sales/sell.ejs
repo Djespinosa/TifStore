@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../partials/head', {webtitle: "Agregar productos" }) %>
+  <body data-products='<%= productsJSON %>'>
+    <%- include('../partials/header') %>
+    <main>
+      <div class="editProduct">
+          <section class="income-form">
+            <div class="logo-editProduct">
+              <i class="fa-solid fa-file-circle-plus"></i>
+            </div>
+            <div class="edit-product-text">
+              <p>NUEVO INGRESO.</p>
+            </div>
+
+            <form action="/cart/sell" method="POST" enctype="application/x-www-form-urlencoded" class="form-editProduct" id="form1">
+
+              <table class= "tableProducts" id="tab_logic_income">
+                <thead>
+                  <tr>                    
+                    <th class="text-center">
+                      ID de usuario
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr id="addr0">                   
+                    <td><input type="text" name="user_id" id ="user_id" value="<%= user.name %>" readonly/></td>                   
+                  </tr>
+  
+                </tbody>
+              </table>              
+              <!-- <button type="submit" onclick="incomeForm1()" class="btn btn-primary">Guardar</button>
+            </form> -->
+
+            <!-- <form action="/stocks/createIncome/createIncomeDetail" method="POST" enctype="application/x-www-form-urlencoded" class="form-editProduct" id="form2"> -->
+
+              <table class="tableProducts" id="tab_logic">
+                <thead>
+                  <tr>
+                    <th class="text-center">
+                      #
+                    </th>
+                    <th class="text-center">
+                      Producto
+                    </th>
+                    <th class="text-center">
+                      Precio
+                    </th>
+                    <th class="text-center">
+                      Cantidad
+                    </th>                    
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr id="addr0">
+                    <td>1</td>
+                    <td>
+                      <select type="number" name="product_id"  id="product_id" placeholder="Producto" class="form-control" onchange="updatePrice(this)">
+                        <option value="" disabled selected>- Selecciona el Producto -</option>
+                          <% products.forEach(product=> { %>
+                          <option value="<%= product.product_id %>">
+                            <%= product.name %>
+                          </option>
+                          <% }); %>
+                      </select>                      
+                      <td><input type="number" name="price" class="form-control" readonly /></td>         
+                      <td><input type="number" name="quantity" placeholder="Cantidad" class="form-control" /></td>
+                    </tr>
+              
+                </tbody>
+              </table>
+              <a id="add_row" class="btn-default">Agregar fila</a><a id="delete_row" class="btn-default">Eliminar fila</a>
+              <button type="submit" id="submit" onclick="sellForm()" class="btn-primary">Vender</button>
+            </form>
+            
+            
+            <div class="edit-back-product">
+              <a href="/products/addEditProduct">Volver a productos</a>
+            </div>
+          </section>
+        </div>
+        </div>
+      </main>
+      <div id="modal-menu" class="modal">
+        <a class="close" href="#">X</a>
+        <li><a href="/">Inicio</a></li>
+        <li><a href="/tshirts">Tienda</a></li>
+        <li><a class="red" href="/users/login">Iniciar sesión</a></li>
+        <li><a href="/users/register">Registrate</a></li>
+        <a class="cart" href="/cart"><i class="fas fa-solid fa-cart-shopping"></i></a>
+      </div>
+      <%- include('../partials/footer') %>
+      
+      <script>
+
+        function updatePrice(select) {
+            const productsJSON = JSON.parse(document.body.dataset.products);
+            const productId = select.value;
+            const product = productsJSON.find(p => p.product_id == productId);
+            const priceInput = select.parentElement.parentElement.querySelector("input[name='price']");
+            priceInput.value = product.price;
+        }
+  
+        // Obtener elementos del DOM
+        var addRowButton = document.getElementById("add_row");
+        var deleteRowButton = document.getElementById("delete_row");
+        var submitButton = document.getElementById("submit");
+        var tableBody = document.querySelector("#tab_logic tbody");
+  
+            // Manejadores de eventos para botones
+      addRowButton.addEventListener("click", function() {
+        var rowCount = tableBody.rows.length;
+        var row = tableBody.insertRow(rowCount);
+        var cell1 = row.insertCell(0);
+        var cell2 = row.insertCell(1);
+        var cell3 = row.insertCell(2);
+        var cell4 = row.insertCell(3);
+
+
+        cell1.innerHTML = rowCount + 1;
+        cell2.innerHTML = '<select type="number" name="product_id"  id="product_id" placeholder="Producto" class="form-control"><option value="" disabled selected>- Selecciona el Producto -</option><% products.forEach(product=> { %><option value="<%= product.product_id %>"><%= product.name %></option><% }); %></select>';
+        cell3.innerHTML = '<input type="number" name="price" class="form-control" readonly />';
+        cell4.innerHTML = '<input type="number" name="quantity" placeholder="Cantidad" class="form-control" />';
+        
+        var selectEl = cell2.querySelector("select");
+        selectEl.addEventListener("change", function() {
+              updatePrice(this);
+          });
+
+      });
+  
+      deleteRowButton.addEventListener("click", function() {
+        var rowCount = tableBody.rows.length;
+        if (rowCount > 1) {
+          tableBody.deleteRow(rowCount - 1);
+        }
+      });
+      
+    </script>
+  
+    </body>
+
+</html>
