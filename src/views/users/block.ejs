@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang=>
+  <%- include('../partials/head', {webtitle: "Iniciar sesión"}) %>
+<body>
+  <%- include('../partials/header') %>
+    <main>
+      <div class="register">
+        
+        <div class="card-register">
+            <section>
+                <div class="logo-login">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+                <div class="log-text">
+                    <h4>Tu cuenta ha sido bloqueada debido a demasiados intentos fallidos de inicio de sesión.</h4>
+                    <h4>Para desbloquear tu cuenta, por favor ingresa tu correo y te enviaremos un enlace.</h4>
+                </div>
+                <form action="/users/unlock" method="POST" class="login-form">
+                    <div class="register-log-email">
+                        <i class="fa-solid fa-envelope"></i>
+                        <input type="text" name="email" id="email" placeholder="Correo Electrónico"
+                            value="<%= locals.oldData ? oldData.email : null%>">
+                    </div>
+                    <% if (locals.errors && errors.email) { %>
+                        <div class="text-danger">
+                    <%= errors.email.msg %>
+                        </div>
+                    <% } %>
+                    <div class="register-button">
+                        <button type="submit" onclick="unlock()">Restaurar contraseña</button>
+                    </div>
+                </form>
+            </section>
+        </div>
+        <a href="/users/login"> <p class="back-login"><u style="font-size: 1rem;">Ir a login</u></p></a>               
+    </main>
+  <%- include('../partials/footer') %>
+</body>
+</html>

@@ -13,8 +13,17 @@ const clientAuthMiddleware = require("../middlewares/clientAuth");
 //addEditUser
 // router.get("/login", guestMiddleware, usersController.login);
 
-//login form
+//login
 router.get("/login", guestMiddleware, usersController.login);
+router.get("/block", guestMiddleware, usersController.block);
+router.get("/resetSent", guestMiddleware, usersController.resetSent);
+router.get("/reset/:token", usersController.showResetPasswordForm);
+router.get("/resetSuccess", usersController.resetSuccess);
+
+//login process
+router.post("/login", usersController.loginProcess);
+router.post("/unlock", guestMiddleware, usersController.unlock);
+router.post("/reset", usersController.resetPassword);
 
 //Edit user
 router.get("/addEditUser", authMiddleware, usersController.addEditUser);
@@ -25,8 +34,6 @@ router.put("/editUser/:id", authMiddleware, uploadFile.single("image"), validati
 
 router.delete("/delete/:id", authMiddleware, usersController.delete);
 
-//login process
-router.post("/login", usersController.loginProcess);
 
 //register form
 router.get("/register", authMiddleware, usersController.register);

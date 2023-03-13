@@ -1,11 +1,14 @@
 const { validationResult } = require("express-validator");
 const bcryptjs = require("bcryptjs");
 const db = require('../../database/models/index');
+const nodemailer = require("nodemailer");
+const { jwt } = require("../middlewares/jwt");
 
 const User = db.users;
 const Rol = db.roles;
 const Status = db.status;
 const port = 3001;
+let intentosFallidos = {};
   
 const controller = {
   addEditUser: async function(req, res){
@@ -88,47 +91,137 @@ const controller = {
     errorInstance.save();
     }
     },
-  loginProcess: async (req, res) => {
-    const checkLogUser = req.body.logUser;
-    const userToLogin = await User.findOne({
-      where :{
-        user_name: checkLogUser,
-      }
-      })
-    if (userToLogin) {
-      const passwordOk = bcryptjs.compareSync(req.body.password, userToLogin.password);
-      if (passwordOk) {
-        delete userToLogin.password;
-        req.session.userLogged = userToLogin;
-            const errorInstance = await Status.build({
-              date: new Date(),
-              url: `${req.protocol}://localhost:${port}${req.originalUrl}`,
-              message: 'Login con exito'
-            });
-            errorInstance.save();
-        return res.redirect("/");
-      } else {
-        return res.render("users/login", {
-          errors: {
-            password: {
-              msg: "La contraseña es incorrecta",
-            },
-          },
-        });
-      }
-    }    
-    return res.render("users/login", {
-      errors: {
-        logUser: {
-          msg: "El usuario no está registrado",
+    loginProcess: async (req, res) => {
+      console.log(intentosFallidos);
+      const checkLogUser = req.body.logUser;
+      console.log(intentosFallidos[checkLogUser]);
+      const userToLogin = await User.findOne({
+        where: {
+          user_name: checkLogUser,
         },
-      },
-    });
-  },
+      });
+    
+      if (userToLogin) {
+        const passwordOk = bcryptjs.compareSync(req.body.password, userToLogin.password);
+        if (passwordOk) {
+          delete userToLogin.password;
+          req.session.userLogged = userToLogin;
+          const errorInstance = await Status.build({
+            date: new Date(),
+            url: `${req.protocol}://localhost:${port}${req.originalUrl}`,
+            message: "Login con exito",
+          });
+          errorInstance.save();
+          intentosFallidos[checkLogUser] = 0; // Reinicia el contador de intentos fallidos después de un inicio de sesión exitoso
+          return res.redirect("/");
+        } else {
+          if (!intentosFallidos[checkLogUser]) {
+            intentosFallidos[checkLogUser] = 1;
+          } else {
+            intentosFallidos[checkLogUser]++;
+          }
+    
+          if (intentosFallidos[checkLogUser] >= 3) {
+            // Si se han producido demasiados intentos fallidos, redirige al usuario a la página de bloqueo
+            return res.redirect("/users/block");
+          }
+    
+          return res.render("users/login", {
+            errors: {
+              password: {
+                msg: "La contraseña es incorrecta",
+              },
+            },
+          });
+        }
+      }
+    
+      return res.render("users/login", {
+        errors: {
+          logUser: {
+            msg: "El usuario no está registrado",
+          },
+        },
+      });
+    },
 
   login: (req, res) => {
     res.render("users/login");
   },
+
+  block: (req, res) => {
+    res.render("users/block");
+  },
+
+  unlock: async (req, res) => {
+
+    let transporter = nodemailer.createTransport({
+      host: "smtp.gmail.com",
+      port: 587,
+      secure: false, // true for 465, false for other ports
+      auth: {
+        user: 'prodisenios1@gmail.com', // generated ethereal user
+        pass: 'vmhhrpjrpygdwopz', // generated ethereal password
+      },  
+    });    
+    
+    // Generar un token de restablecimiento de contraseña
+    const token = jwt.sign({ email: req.body.email }, 'Deymer', { expiresIn: '1h' });
+    
+    // Crear el enlace que incluye el token
+    const resetUrl = `${req.protocol}://${req.get("host")}/users/reset/${token}`;
+    
+    // Enviar el correo electrónico
+    let info = await transporter.sendMail({
+      from: "prodisenios1@gmail.com",
+      to: req.body.email,
+      subject: "Restablecimiento de contraseña",
+      text: `Para restablecer tu contraseña, por favor haz clic en el siguiente enlace: ${resetUrl}`,
+    });
+    res.render("users/resetSent");
+  },
+
+  resetSent: (req, res) => {
+    res.render("users/resetSent");
+  },
+
+  showResetPasswordForm: (req, res) => {
+    // Decodificar el token
+    const token = req.params.token;
+    console.log(token)
+    jwt.verify(token, 'Deymer', (error) => {
+      if (error) {
+        console.log(error);
+        return res.status(400).send("El enlace de restablecimiento de contraseña no es válido o ha expirado");
+      } else {
+        // Renderizar la vista de restablecimiento de contraseña con el token decodificado
+        
+        res.render("users/resetPassword", { token });
+      }
+    });
+  },  
+
+  resetPassword: async (req, res) => {
+    try {
+      const token = req.body.token;
+      const decodedToken = jwt.verify(token, 'Deymer');
+      const hashedPassword = bcryptjs.hashSync(req.body.password, 10);
+      
+      await User.update({ password: hashedPassword }, {
+        where: { email: decodedToken.email }
+      });
+  
+      return res.render("users/resetSuccess");
+    } catch (error) {
+      console.log(error);
+      return res.status(500).send("Hubo un error al restablecer la contraseña");
+    }
+  },  
+
+  resetSuccess: (req, res) => {
+    res.render("users/resetSuccess");
+  },
+
   register: async (req, res) => {
     try{
       const roles = await Rol.findAll();
