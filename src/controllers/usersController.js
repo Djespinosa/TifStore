@@ -92,9 +92,7 @@ const controller = {
     }
     },
     loginProcess: async (req, res) => {
-      console.log(intentosFallidos);
       const checkLogUser = req.body.logUser;
-      console.log(intentosFallidos[checkLogUser]);
       const userToLogin = await User.findOne({
         where: {
           user_name: checkLogUser,
@@ -124,8 +122,7 @@ const controller = {
           if (intentosFallidos[checkLogUser] >= 3) {
             // Si se han producido demasiados intentos fallidos, redirige al usuario a la página de bloqueo
             return res.redirect("/users/block");
-          }
-    
+          }    
           return res.render("users/login", {
             errors: {
               password: {
@@ -188,7 +185,6 @@ const controller = {
   showResetPasswordForm: (req, res) => {
     // Decodificar el token
     const token = req.params.token;
-    console.log(token)
     jwt.verify(token, 'Deymer', (error) => {
       if (error) {
         console.log(error);

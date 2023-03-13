@@ -19,6 +19,7 @@ router.post("/", clientAuthMiddleware, cartController.createSale);
 
 router.get("/dashboard", authMiddleware, cartController.dashboard);
 router.get("/sell", sellerAuthMiddleware, cartController.sell);
+router.get("/successfulSale", authMiddleware, cartController.successfulSale);
 router.post("/sell", sellerAuthMiddleware, cartController.sellForm);
 
 

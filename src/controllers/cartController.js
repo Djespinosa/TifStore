@@ -20,7 +20,6 @@ const controller = {
     createSale: async function (req, res) {
         try {            
             const objeto = req.body;
-            console.log(objeto);
             const resultado = [];
             
             const productIds = Array.isArray(objeto.product_id) ? objeto.product_id : [parseInt(objeto.product_id)];
@@ -43,7 +42,6 @@ const controller = {
                 };          
             resultado.push(item);
             }
-            console.log(resultado);
             
             await saleDetail.bulkCreate(resultado);
 
@@ -180,7 +178,6 @@ const controller = {
 
     sellForm: async function(req, res){
         const objeto = req.body;
-        console.log(objeto)
         try {     
             const resultado = [];
 
@@ -205,8 +202,6 @@ const controller = {
             resultado.push(item);
             }
 
-            console.log(resultado)
-
             await saleDetail.bulkCreate(resultado);
             
             for (let i = 0; i < resultado.length; i++) {
@@ -225,7 +220,7 @@ const controller = {
             });
             errorInstance.save();
 
-            return res.redirect("/");
+            return res.render("sales/successfulSale");
 
         } catch (err){
             const errorInstance = Status.build({
@@ -235,7 +230,10 @@ const controller = {
             });
             errorInstance.save();
         }
-    }
+    },
+    successfulSale: (req, res) => {
+        res.render("sales/successfulSale");
+      },
 };
 
 module.exports = controller;
