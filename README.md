@@ -14,4 +14,4 @@
 
 ## Enlace al tablero de trabajo
 
--   https://trello.com/b/11Sh6nMs/prueba-de-desarrollo-de-software
+-   https://trello.com/b/UKXbBNq2/tifstore
